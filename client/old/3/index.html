@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- STYLES (last overrides previous)-->
+    <!-- <link rel="stylesheet" href="css/font-awesome-all.css" type="text/css"> -->
+    <link rel="stylesheet" href="css/normalize.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"><!-- more themes on bootswatch: -->
+    <!-- my own definitions: -->
+    <link rel="stylesheet" type="text/css" href="css/dark.css">
+
+</head>
+
+<body class="">
+
+    <div class="header-top-area">
+        <div class="container-fluid">
+            <div class="row justify-content-between align-items-start">
+                <div class="pl-3 col-xs-auto text-center">
+                    <div class="">
+                        <img class="user-area" src="img/user.png">
+                        <div id="user">assface is life</div>
+                    </div>
+                </div>
+
+                <div class="pl-3 col-xs-auto text-center">
+                    <div class="">
+                        <img class="user-area" src="img/conn-0.png">
+                        <!-- <div class="button" onclick='disconnect();'>CLOSE</div>  -->
+                        <div id="server">--</div>
+                    </div>
+                </div>
+
+                <div class="col">
+                </div>
+
+                <div class="datetime-area col-md-3 col-xs-6 d-none d-sm-block text-center">
+                    <div id="time" class="h1 text-light"></div>
+                    <div id="date" class="pt-1 "></div>
+                </div>
+                <!-- hide time and weather in mobile -->
+                <div class="weather-area col-md-auto d-none d-md-block float-left ">
+
+                    <!-- <script type='text/javascript'
+                        src='https://darksky.net/widget/default-small/21.9745,113.9314/uk12/en.js?width=100%&height=70&title=Full Forecast&textColor=ffffff&bgColor=transparent&transparency=true&skyColor=undefined&fontFamily=Default&customFont=&units=uk'></script> -->
+
+
+                    <div class="row">
+                        <div class="col-xs-auto">
+                            <img id="weather-icon" src="img/storm.png">
+                        </div>
+                        <div class="col">
+                            <div class="weather-temperature h1 text-light">30 C</div>
+                        </div>
+                    </div>
+                    <div class="row row justify-content-start">
+                        <div id="weather-text">bit crap in the mornings</div>
+                    </div>
+                </div>
+
+                <div class="col">
+                </div>
+
+                <div class="col-xs-auto">
+                    <div class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu"
+                        aria-controls="mainmenu" aria-expanded="false" aria-label="Toggle navigation">
+                        <!-- <span class="navbar-toggler-icon"></span> -->
+                        <img src="img/menu.png">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-dark bg-primary navbar-hide text-right">
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="mainmenu">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" value="dashboard">Dashboard<i
+                            class="fas fa-tachometer-alt"></i></a> </li>
+                <li class="nav-item"><a class="nav-link" value="charts">Charts<i class="fas fa-chart-line"></i></a></li>
+                <li class="nav-item"><a class="nav-link" value="settings">Settings<i class="fas fa-cogs"></i></a></li>
+                <li class="nav-item"><a class="nav-link" value="log">Log<i class="fas fa-list-ol"></i></a></li>
+                <li class="nav-item"><a class="nav-link" value="weather">Weather<i class="fas fa-sun"></i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="content-area container-fluid pt-3 px-3">
+
+        <div id="dashboard" style="display: none">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card bg-primary" id="greenhouse1-temp1">
+                        <div class="card-header">
+                            <div class="row pl-3">
+                                <div class="col-xs-auto"><i class="fas fa-temperature-low"></i></div>
+                                <div class="col">
+                                    <div id="dash-panel-name">name</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- <div class="card-title">
+                                <i class="fas fa-temperature-low"></i>
+                                <div id="dash-panel-name">name</div>
+                            </div> -->
+                            <H1 class="card-text text-light" id="panel_value">XX</H1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card bg-primary" id="greenhouse1-humidity">
+                        <div class="card-header">
+                            <div class="row pl-3">
+                                <div class="col-xs-auto"><i class="fas fa-temperature-low"></i></div>
+                                <div class="col">
+                                    <div id="dash-panel-name">name</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- <div class="card-title">
+                                    <i class="fas fa-temperature-low"></i>
+                                    <div id="dash-panel-name">name</div>
+                                </div> -->
+                            <H1 class="card-text text-light" id="panel_value">XX</H1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="log" style="display: none">
+            <!-- LOG SHOULD READ FROM DB NOT WS -->
+            <!-- THEN APPEND NEW DATA BASED ON TIMESTAMP -->
+            <div class="row">
+                <div class="col-md-3 bg-primary">
+                    settings
+                </div>
+                <div class="col">
+                    <table id="logtable" class="table table-hover table-striped table-sm">
+                        <thead class="bg-primary">
+                            <tr>
+                                <th scope="col">Time</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Key</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- table rows get added here -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="weather" style="display: none">
+            <div class="row">
+                <div class="col">
+                    <H1>Weather</H1>
+                    <H3>It's all good, no worries</H3>
+                    <!-- <script type='text/javascript'
+                        src='https://darksky.net/widget/graph/42.360082,-71.05888/si12/en.js?width=100%&height=320&title=Full Forecast&textColor=ffffff&bgColor=000000&transparency=true&fontFamily=Default&customFont=&units=si&graph=temperature_graph&timeColor=ffffff&tempColor=ffffff&lineColor=dddddd&markerColor=ffffff'></script> -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- footer -->
+    <div class="footer-area">
+        <div class="container-fluid">
+            <div class="row justify-content-between">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10 form-inline interval-control">
+                    <div>INTERVAL: </div>
+                    <div id="interval"></div>
+                    <input type="button" class="btn btn-primary btn-sm" value="STOP" onclick='disconnect();'>
+                    <input type="button" class="btn btn-primary btn-sm" value="START" onclick='connect();'>
+                    <input type="button" class="btn btn-primary btn-sm" value="0.3"
+                        onclick='sendText("interval", 0.3);'>
+                    <input type="button" class="btn btn-primary btn-sm" value="0.5"
+                        onclick='sendText("interval", 0.5);'>
+                    <input type="button" class="btn btn-primary btn-sm" value="1" onclick='sendText("interval", 1);'>
+
+                </div>
+
+                <div class="col-xsauto form-inline">
+                    <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
+                        data-target="#exampleModalCenter">
+                        SAVE
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- https://bootstrapious.com/p/bootstrap-sidebar -->
+
+    <!-- JAVASCRIPTS -->
+    <script src="js/jquery-3.4.0.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script defer src="js/fa-all.js"></script>
+
+    <script type="text/javascript">
+        //defaults
+        var username = "josh";
+        var defaultInterval = 1;
+        var homepage = "dashboard";
+
+        // runtime vars:
+        var JSONfromSRVR = null;
+        var socket = null;
+        var isopen = false;
+
+        // socket = new WebSocket("ws://127.0.0.1:9000");
+        socket = new WebSocket("ws://192.168.1.101:9000");
+
+        // main functions:
+        window.onload = function () {
+            updateClock();
+            setInterval('updateClock()', 1000);
+        };
+
+        function navigate(page) { // hide all content, then show the one and set it active
+            //hide all content
+            $(".content-area").children().hide();
+            $("#mainmenu .navbar-nav .nav-item a").removeClass("active"); //set all inactive
+
+            $("#" + page).show(); //show one page
+            $(".nav-item a[value='" + page + "']").addClass("active");
+
+        }
+
+        $(document).ready(function () {
+            var thisURL = $(location).attr('href');
+            var URLparts = thisURL.split('#');
+            if (URLparts[1]) { homepage = URLparts[1] };
+            navigate(homepage);
+            $("#mainmenu .navbar-nav .nav-item a").click(function () { // mainmenu pressed
+                var page = $(this).attr('value'); //get pagename
+                navigate(page);
+                $("#mainmenu").collapse('hide');
+            });
+            senddefaults();
+        });
+
+        window.onclose = function () {
+            disconnect();
+        };
+
+        socket.onopen = function () {
+            console.log("Connected!");
+            $("#server").text("ONLINE");
+            isopen = true;
+            sendText("username", username); // simple authentication / id of user
+            $("#user").text(username);
+            $("#server").text("LIVE");
+            $("#server").toggleClass("success")
+            $(".interval-control .btn[value='STOP'").show();
+            $(".interval-control .btn[value='START'").hide();
+
+        };
+
+        socket.onmessage = function (e) {
+            var now = new Date();
+            //console.log("RX: " + e.data);
+            var JSONfromSRVR = JSON.parse(e.data) // parse string to object
+            for (var datatype in JSONfromSRVR) { // start sinking into json object: get datatype (reading)
+                //console.log("-type:"+datatype);
+                for (var subcat = 0; subcat < JSONfromSRVR[datatype].length; subcat++) { //iterate over array of subcategories
+                    for (var subcatname in JSONfromSRVR[datatype][subcat]) { //get name of subcategory (greenhouse)
+                        var dataarray = JSONfromSRVR[datatype][subcat][subcatname]; //get value array of subcategory 
+                        //console.log("--"+subcatname); // name of subcategory
+                        for (var cell = 0; cell < dataarray.length; cell++) { //iterate over each cell (temp1:300)
+                            var jkey = dataarray[cell].name;
+                            var jval = dataarray[cell].value;
+                            // console.log("---data: "+jkey+":"+jval); // name of value in subcategory
+                            // take actions based on [datatype]
+                            if (datatype == "reading") {
+                                var panelname = subcatname + "-" + jkey;
+                                $("#" + panelname + " #dash-panel-name").text(jkey);
+                                $("#" + panelname + " .card-body .card-text").text(jval);
+                                // show subcatname?
+
+                            } else if (datatype == "setting") {
+                                $("#interval").text(jval + "s ");
+                                // } else if (datatype == "alert"){
+                                div_log_row = '<tr><th scope="row">' + now.toLocaleTimeString() + '</th><td>' + datatype + '</td><td>' + jkey + '</td><td>' + jval + '</td></tr>'
+                                // $("#logtable").append(div_log_row);
+                                $("#logtable tbody").prepend(div_log_row);
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // socket.onerror = function (e){
+        //     alert("socket error");
+        // }
+        socket.onclose = function (e) {
+            console.log("Connection closed.");
+            socket = null;
+            isopen = false;
+            $("#server").toggleClass("warning")
+            $("#server").text("OFFLINE");
+            $(".interval-control .btn[value='STOP'").hide();
+            $(".interval-control .btn[value='START'").show();
+        };
+
+        function senddefaults() {
+            sendText("interval", defaultInterval); //et the default interval
+            $(".interval-control .btn[value='" + defaultInterval + "'").addClass("active");
+        }
+
+        function disconnect() {
+            socket.close();
+        };
+
+        function connect() {
+            location.reload();
+        };
+
+        function sendText(key, value) {
+            if (isopen) {
+                jsonstring = JSON.stringify({
+                    [key]: value
+                }) // [] needed to avoid taking "key literally"
+                socket.send(jsonstring);
+                console.log("TX: " + jsonstring);
+            } else {
+                console.log("Connection not opened.")
+            }
+        };
+
+        function updateClock() {
+            var now = new Date();
+            $("#time").text(now.toLocaleTimeString());
+            $("#date").text(now.toDateString());
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- STYLES (last overrides previous)-->
+    <!-- <link rel="stylesheet" href="css/font-awesome-all.css" type="text/css"> -->
+    <link rel="stylesheet" href="css/normalize.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"><!-- more themes on bootswatch: -->
+    <!-- my own definitions: -->
+    <link rel="stylesheet" type="text/css" href="css/dark.css">
+
+
+  <link href="css/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="">
+    <div class="innerbody">
+
+        <div class="header-top-area">
+            <div class="container-fluid">
+                <div class="row justify-content-between align-items-start">
+
+                    <div class="col-xs-auto">
+                        <div id="sidebarCollapse" class="navbar-toggler" type="button">
+                            <!-- <span class="navbar-toggler-icon"></span> -->
+                            <i class="fas fa-bars fa-2x"></i>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                    </div>
+
+                    <div class="datetime-area col-md-3 col-xs-6 d-none d-sm-block text-center">
+                        <div id="current-time" class="h2 text-light d-inline"></div>
+                        <div id="current-date"></div>
+                    </div>
+                    <!-- hide time and weather in mobile -->
+                    <div class="weather-area col-md-auto d-none d-md-block text-center">
+                        <i class="fas fa-fw fa-2x fa-sun d-inline"></i>
+                        <div class="weather-temperature h2 text-light d-inline">23 C</div>
+                        <div id="weather-text">bit crap in the mornings</div>
+
+                        <!-- <script type='text/javascript'
+                            src='https://darksky.net/widget/default-small/21.9745,113.9314/uk12/en.js?width=100%&height=70&title=Full Forecast&textColor=ffffff&bgColor=transparent&transparency=true&skyColor=undefined&fontFamily=Default&customFont=&units=uk'></script> -->
+
+                    </div>
+
+                    <div class="col">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- progress bars etc -->
+        <div class="status-area bg-dark d-none">
+            <div class="progress bg-dark" style="height: 10px;">
+                <!-- add some js -->
+                <!-- $('.progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur -->
+                <!-- http://www.minddust.com/project/bootstrap-progressbar/demo/bootstrap-3-3-4/#h-default -->
+                <!-- https://www.uibootstrap.net/bootstrap-css/progress-bar-circle-for-steps-using-bootstrap/ -->
+                <div class="progress-bar bg-info" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0"
+                    aria-valuemax="100">30%
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="wrapper">
+
+            <!-- Sidebar  -->
+            <nav id="sidebar" class="text-light">
+                    <!-- https://bootstrapious.com/p/bootstrap-sidebar -->
+
+                <div id="accordionTOP" class="py-0 my-0">
+                    <ul class="list-unstyled my-0 py-0">
+
+                        <li class="nav-item pt-4 pb-4" data-toggle="collapse" data-target="#serverinfo-area" aria-expanded="false" aria-controls="serverinfo-area">
+                            <div class="text-center d-sm-block">
+                                <i class="fas fa-3x fa-fw fa-user d-inline-block"></i>  
+                                <div class="d-inline-block">
+                                    <div id="user">none</div> 
+                                    <div id="server" class="rounded bg-black mx-1 px-1">...</div>
+                                </div>
+                            </div>
+                            
+                        </li>
+                        <div id="status-info-area" class="pt-0 my-0">
+                            <div id="serverinfo-area" class="collapse" data-parent="#accordionTOP">
+                                <ul class="list-unstyled">
+                                    <li class="py-2"><i class="fas fa-fw fa-circle-notch fa-spin"></i>Uptime: <div class="d-inline" id="server-uptime"> -- </div> s</li>
+                                    <li class="py-2"><i class="fas fa-fw fa-clock"></i>TX: <div class="d-inline" id="TXcount">0</div></li>
+                                    <li class="py-2"><i class="fas fa-fw fa-list-ol"></i>RX: <div class="d-inline" id="RXcount">0</div></li>
+                                    <div class="form-inline interval-control py-2">
+                                        <!-- hide the buttons when disconnected -->
+                                        <input type="button" class="btn btn-primary btn-sm" value="STOP" onclick='disconnect();'>
+                                        <input type="button" class="btn btn-primary btn-sm" value="START" onclick='connect();'>
+                                        <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#exampleModalCenter"> SAVE</button>
+                                        <!-- <input type="button" class="btn btn-primary btn-sm" value="0.3" onclick='sendText("interval", 0.3);'>
+                                        <input type="button" class="btn btn-primary btn-sm" value="0.5" onclick='sendText("interval", 0.5);'>
+                                        <input type="button" class="btn btn-primary btn-sm" value="1" onclick='sendText("interval", 1);'> -->
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+                <div id="accordionMID" class="py-0 my-0">
+                    <ul class="list-unstyled border-bottom border-dark py-0">
+                        <li class="nav-item"><a class="nav-link" value="past" href="#past"><i class="fas fa-fw fa-info"></i>Past
+                            <div class="rounded float-right bg-black warning mx-1 px-1">3</div></a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" value="future" href="#future"><i class="fas fa-fw fa-envelope"></i>Future
+                            <div class="rounded float-right bg-black warning mx-1 px-1">0</div></a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" value="dashboard" href="#dashboard"><i class="fas fa-fw fa-tachometer-alt"></i>Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" value="charts" href="#charts"><i class="fas fa-fw fa-chart-line"></i>Charts</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" value="settings" href="#settings"><i class=""></i>Settings</a></li> -->
+                        <li class="nav-item"><a class="nav-link" value="log" href="#log"><i class="fas fa-fw fa-list-ol"></i>Log</a></li>
+                        <li class="nav-item"><a class="nav-link" value="weather" href="#weather"><i class="fas fa-fw fa-sun"></i>Weather</a></li>
+                        <li class="nav-item nav-link" data-toggle="collapse" data-target="#settings-pages" aria-expanded="false" aria-controls="settings-pages">
+                            <i class="fas fa-fw fa-user-cog"></i>Settings<div class="rounded float-right bg-black warning mx-1 px-1">1</div>
+                        </li>
+                        <div id="settings-pages" class="collapse mx-0 px-0" data-parent="#accordionMID">
+                            <ul class="list-unstyled py-0 px-0">
+                                <li class="nav-item px-0"><a class="nav-link mx-0 px-3" value="server-settings" href="#server-settings"><i class="fas fa-fw fa-cog"></i>Server</a></li>
+                                <li class="nav-item px-0"><a class="nav-link mx-0 px-3" value="device-list" href="#device-list"><i class="fas fa-fw fa-chart-line"></i>Devices</a></li>
+                                <li class="nav-item px-0"><a class="nav-link mx-0 px-3" value="user-preferences" href="#user-preferences"><i class="fas fa-fw fa-user-cog"></i>User preferences</a></li>
+                                
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Page Content  -->
+            <div id="content"class="content-area container-fluid pt-3 px-3 bg-dark text-light">
+
+                <div id="dashboard" style="display: none">
+                        <!-- https://demos.creative-tim.com/black-dashboard/examples/dashboard.html -->
+                    <div class="row">
+                        <div class="col-sm">
+
+                            <div class="card bg-primary" id="greenhouse1-temp1">
+                                <div class="card-header">
+                                    <i class="fas fa-temperature-low"></i>
+                                    <div id="dash-panel-name" class="d-inline">name</div>
+                                </div>
+                                <div class="card-body">
+                                    <!-- <div class="card-title">
+                                        <i class="fas fa-temperature-low"></i>
+                                        <div id="dash-panel-name">name</div>
+                                    </div> -->
+                                    <H1 class="card-text text-light" id="panel_value">XX</H1>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm">
+                            <div class="card bg-primary" id="greenhouse1-humidity">
+                                <div class="card-header">
+                                    <i class="fas fa-temperature-low"></i>
+                                    <div id="dash-panel-name" class="d-inline">name</div>
+                                    <i class="fas fa-list-ol float-right"></i>
+                                </div>
+                                <div class="card-body">
+                                    <H1 class="card-text text-light" id="panel_value">XX</H1>
+                                </div>                     
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+        
+                <div id="log" style="display: none">
+                    <!-- LOG SHOULD READ FROM DB NOT WS -->
+                    <!-- THEN APPEND NEW DATA BASED ON TIMESTAMP -->
+                    <div class="row">
+                        <div class="col">
+                            <table id="logtable" class="table table-hover table-striped table-sm table-dark">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Topic</th>
+                                        <th scope="col">Key</th>
+                                        <th scope="col">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- table rows get added here -->
+                                </tbody>
+                            </table>
+                        </div>
+        
+                    </div>
+                </div>
+
+                <div id="charts" style="display: none">
+                    <div class="row">
+                        <div class="col text-danger">
+                            <!-- <H1>Charts</H1> -->
+                            
+
+                            <!-- <canvas id="myChartz"></canvas> -->
+                            <div id="c3chart">hmm</div>
+                            
+                            <!-- 
+                            https://www.chartjs.org/docs/latest/
+                            http://nagix.hatenablog.com/entry/2017/07/11/004952
+                            https://colorlib.com/polygon/gentelella/other_charts.html
+
+                            https://stackoverflow.com/questions/29614365/websocket-data-to-update-chartjs-chart -->
+
+                            <!-- https://medium.com/@benjaminmbrown/real-time-data-visualization-with-d3-crossfilter-and-websockets-in-python-tutorial-dba5255e7f0e -->
+                            <!-- https://stackoverflow.com/questions/34578507/d3js-chart-update-triggered-on-websocket-message -->
+                            <!-- https://github.com/mdrilwan/dashboard/tree/master/WebContent/js -->
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="weather" style="display: none">
+                    <div class="row">
+                        <div class="col">
+                            <H1>Weather</H1>
+                            <H3>It's all good, no worries</H3>
+
+                            <!-- https://www.programmableweb.com/news/top-10-weather-apis/analysis/2014/11/13 -->
+
+                            <!-- https://www.weather.gov/documentation/services-web-api -->
+                            <!-- https://developer.accuweather.com -->
+                            <!-- http://www.bom.gov.au/catalogue/data-feeds.shtml -->
+
+                            <!-- https://openweathermap.org/appid
+
+                            {"coord":{"lon":139,"lat":35},
+                            "sys":{"country":"JP","sunrise":1369769524,"sunset":1369821049},
+                            "weather":[{"id":804,"main":"clouds","description":"overcast clouds","icon":"04n"}],
+                            "main":{"temp":289.5,"humidity":89,"pressure":1013,"temp_min":287.04,"temp_max":292.04},
+                            "wind":{"speed":7.31,"deg":187.002},
+                            "rain":{"3h":0},
+                            "clouds":{"all":92},
+                            "dt":1369824698,
+                            "id":1851632,
+                            "name":"Shuzenji",
+                            "cod":200} -->
+
+
+                            <!-- <script type='text/javascript'
+                                src='https://darksky.net/widget/graph/42.360082,-71.05888/si12/en.js?width=100%&height=320&title=Full Forecast&textColor=ffffff&bgColor=000000&transparency=true&fontFamily=Default&customFont=&units=si&graph=temperature_graph&timeColor=ffffff&tempColor=ffffff&lineColor=dddddd&markerColor=ffffff'></script> -->
+        
+
+                                <!-- crowdsource my weather option (select sensors) -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="calendar" style="display: none">
+                    <div class="row">
+                        <div class="col">
+                            <H1>Calendar</H1>
+                            <H3>It's all good, no worries</H3>
+                            https://momentjs.com/
+                        </div>
+                    </div>
+                </div>
+
+                <div id="past" style="display: none">
+                    <div class="row">
+                        <div class="col">
+                            <H1>Past</H1>
+                            <H3>It's all good, no worries</H3>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="future" style="display: none">
+                    <div class="row">
+                        <div class="col">
+                            <H1>Future</H1>
+                            <H3>It's all good, no worries</H3>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="device-list" style="display: none">
+                    <!-- FEAD FROM DB: WHICH DEVICES CAN USER VIEW -->
+                    <h2 class=" d-inline">Connected devices</h2>
+                    <div class="nav-item float-right d-inline"><a href="#device-settings" value="device-settings" class=""> 
+                        <button type="button" class="btn btn-primary">+ New device</button>
+                    </a></div>
+                    <div class="row">
+                        <div class="col">
+                            <table id="devtable" class="table table-hover table-striped table-sm table-dark">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Connection</th>
+                                        <th scope="col">Last seen</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- table rows get added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="device-settings" style="display: none">
+                    <div class="row">
+                        <div class="col text-center"> 
+                            <form class="needs-validation col-md-8" novalidate>
+                                <button type="button" class="btn btn-primary col-md-10">Auto detect</button>
+                                <br>
+                                <br>
+                                                       
+                                <div class="form-row">
+                                    <h1>1</h1>
+                                    <div class="form-group col-md-5">
+                                        <label for="inputEmail4">Interface</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>USB</option>
+                                            <option>WIFI</option>
+                                            <option>ETH</option>
+                                        </select>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputCity">IP Address</label>
+                                        <input type="text" class="form-control" id="inputCity">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <div class="form-radio">
+                                        <input class="form-radio-input" type="radio" id="gridCheck1">
+                                        <label class="form-check-label" for="gridCheck1">
+                                            Add new device
+                                        </label>
+                                        <input class="form-radio-input" type="radio" id="gridCheck">
+                                        <label class="form-check-label" for="gridCheck">
+                                            Modify added device
+                                        </label>
+                                    </div>
+                                </div> -->
+
+                                <div class="form-row">
+                                        <h1>2</h1>
+                                    <div class="form-group col-md-5">
+                                        <label for="inputType">Device type</label>
+                                        <select id="inputType" class="form-control bg-black">
+                                            <option selected>Arduino</option>
+                                            <option>ESP</option>
+                                            <option>STM</option>
+                                        </select>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Subcat</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>NANO</option>
+                                            <option>UNO</option>
+                                            <option>MEGA</option>
+                                        </select>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <h1>3</h1>
+                                    <div class="form-group col-md-7">
+                                        <label for="inputZip">Device name</label>
+                                        <input type="text" class="form-control" id="inputZip">
+                                        <small id="passwordHelpInline" class="text-muted">
+                                                Name must be unique and contain only letters, numbers, dash
+                                            </small>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputState">Icon</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputZip">Color</label>
+                                        <input type="text" class="form-control" id="inputZip">
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="reset" class="btn btn-warning">x Reset</button>
+                                <button type="submit" class="btn btn-success">Save and Next ></button>
+                            </form>
+                            <br>
+
+
+                        
+                            
+        <!-- 
+            https://getbootstrap.com/docs/4.0/components/forms/
+                            - **add/change Device**
+                            - device name (new or dropdown)
+                            - select interface (dropdown)
+                            - USB
+                                - port?
+                            - WIFI
+                                - ip address
+                            - ETHERNET
+                                - ip address
+                            - Device type (dropdown)
+                            - arduino (dropdown)
+                            - NodeMCU
+                            - stm32
+                            - raspberry pi
+
+
+
+
+
+                        - **add/change SENSOR**
+                            - connected to device name (dropdown of existing)
+                            - Name(new or dropdown)
+                            - type of sensor
+                            - temp
+                            - humid
+                            - ...
+                            - interface (pins)
+                            - Analog
+                            - digital
+                            - SPI
+                            - address
+                            - I2C
+                                - address
+                            - onewire
+                                - address -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick='pubit("house/bulb1", "greenhouse1-temp1", "saved");'>Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- https://bootstrapious.com/p/bootstrap-sidebar -->
+    <!-- https://mladenplavsic.github.io/bootstrap-navbar-sidebar/ -->
+
+    <!-- JAVASCRIPTS -->
+    <script src="js/jquery-3.4.0.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script defer src="js/fa-all.js"></script>
+    <script src="js/d3.v5.min.js"></script>
+    <script src="js/c3.min.js" type="text/javascript"></script>
+    <script src="js/mqttws31.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        //defaults
+        var username = "v4-mqtt";
+        var defaultInterval = 1;
+        var homepage = "dashboard";
+        var nodata = "No data"
+
+        // runtime vars:
+        var JSONfromSRVR = null;
+        var socket = null;
+        var isopen = false;
+
+
+        var chartdata = [['x'] ['temp1', 0],['humid1',0]];
+        var chart = c3.generate({
+                    bindto: '#c3chart',
+                    size: {
+                        height: 400,
+                        width: 1000
+                    },
+                    data: {
+                        x: 'x',
+                        columns:
+                            chartdata              
+                    },
+                    axis: {
+                        x: {
+                            type: 'timeseries',
+                            // tick: {
+                            //     format: '%Y-%m-%d'
+                            // }
+                        }
+                    }
+                }); 
+                // chart.hide(['data1']);
+    
+
+        // main functions:
+        window.onload = function () {
+            updateClock();
+            setInterval('updateClock()', 1000);
+            $(".interval-control .btn[value='STOP'").hide();
+            $("#dashboard .card-body .card-text").text(nodata);
+        };
+
+        function navigate(page) { // hide all content, then show the one and set it active
+            //hide all content
+            $(".content-area").children().hide();
+            $("#sidebar .nav-link").removeClass("active"); //set all inactive
+            $(".nav-link[value='" + page + "']").addClass("active");
+            $("#" + page).fadeIn(); //show one page
+        }
+
+        $(document).ready(function () {
+            var thisURL = $(location).attr('href');
+            var URLparts = thisURL.split('#');
+            if (URLparts[1]) { homepage = URLparts[1] };
+            $("#user").text(username);
+            navigate(homepage);
+            $(".nav-item a").click(function () {       // mainmenu page switch
+                var page = $(this).attr('value'); //get pagename
+                navigate(page);
+                
+                // $("#sidebar").toggleClass('active');
+                    // c3 d3
+                    
+            });
+            $(".datetime-area").click(function () {             // clicked on the top clock
+                navigate("calendar");
+            });
+            $(".weather-area").click(function () {              // clicked on top weather
+                navigate("weather");
+            });
+            $('#sidebarCollapse').on('click', function () {     //sidebar hide show
+                $('#sidebar').toggleClass('active');
+            });
+
+            //senddefaults();         // send info tu server. (server should get this from DB)
+        });
+
+        window.onclose = function () {
+            disconnect();
+        };
+
+
+
+        var host = "127.0.0.1";
+        var port = 9001;
+        var client = new Paho.MQTT.Client(host, port, username);
+        var topic = "house/bulb1"
+
+        
+        var connectionEstablished = "";
+        var uptime = "--:--";
+        var RXcount = 0;
+
+        // set callback handlers
+        client.onConnectionLost = onConnectionLost;
+        client.onMessageArrived = onMessageArrived;
+
+        connect();
+
+        function connect(){
+            client.connect({ 
+                onSuccess: onConnect
+            });
+        }
+
+        function parsemessage(JSONfromSRVR){
+            var now = new Date();
+            var time_now = now.toLocaleTimeString();
+            for (var key in JSONfromSRVR) {
+                console.log("-- KEY:"+key);
+                console.log("-- VAL:"+JSONfromSRVR[key]);
+                var jkey = key;
+                var jval = JSONfromSRVR[key];
+
+                if (topic == "house/bulb1") {
+                    $("#" + key + " #dash-panel-name").text(jkey);
+                    $("#" + key + " .card-body .card-text").text(jval);
+
+                    // chartdata[0].push(time_now);
+                    // chartdata[cell].push(jval);
+                    // chartdata.splice(1, 1);      //remove 2nd element
+                    
+                    chart.load({
+                        columns: chartdata
+                    });
+                    // console.log(chartdata);
+                } else if (topic == "setting") {
+                    $("#interval").text(jval + "s ");
+                    // } else if (datatype == "alert"){
+                    //div_log_row = '<tr><th scope="row">' + time_now + '</th><td>' + datatype + '</td><td>' + jkey + '</td><td>' + jval + '</td></tr>';
+                    // $("#logtable").append(div_log_row);
+                    //$("#logtable tbody").prepend(div_log_row);
+                }
+                var div_log_row = '<tr><th scope="row">' + now.toLocaleTimeString() + '</th><td>' + topic + '</td><td>' + jkey + '</td><td>' + jval + '</td></tr>';
+                $("#logtable tbody").prepend(div_log_row);
+            }
+        }
+
+        // called when the client connects
+        function onConnect() {
+            // Once a connection has been made, make a subscription and send a message.
+            console.log("- MQTT Connected!");
+            $("#server").text("ONLINE");
+            $("#server").addClass("success")
+            $("#server").removeClass("warning");
+            isopen = true;
+            connectionEstablished = new Date();
+
+            $(".interval-control .btn[value='STOP'").show();
+            $(".interval-control .btn[value='START'").hide();
+
+            client.subscribe("house/bulb1");
+            console.log("- MQTT SUB: ");
+
+           pubit("house/bulb1", "greenhouse1-temp1", "valuuz")
+        }
+
+        function onMessageArrived(message) {
+            console.log("- MQTT RX:"+message.payloadString);
+            var JsonFromBroker = JSON.parse(message.payloadString) // parse string to object
+            parsemessage(JsonFromBroker);
+            RXcount++;
+            $("#RXcount").text(RXcount);
+        }
+        // called when the client loses its connection
+        function disconnect(){
+            client.disconnect();
+            closeConnection();
+        }
+        
+        function onConnectionLost(responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("- MQTT connection lost:"+responseObject.errorMessage);
+                closeConnection();
+            }
+        }
+
+        function closeConnection(){
+            console.log("- MQTT Connection closed.");
+            $("#server").addClass("warning");
+            $("#server").removeClass("success");
+            $("#server").text("OFFLINE");
+            $(".interval-control .btn[value='STOP'").hide();
+            $(".interval-control .btn[value='START'").show();
+            connectionEstablished = new Date();
+            RXcount = 0;
+        }
+
+        function pubit(topic, key, value){
+            jsonstring = JSON.stringify({
+                    [key]: value
+                }) // [] needed to avoid taking "key literally"
+            message = new Paho.MQTT.Message(jsonstring);
+            message.destinationName = topic;
+            client.send(message);
+            console.log("- MQTT TX:", JSON.parse(jsonstring));
+        }
+
+        function updateClock() {
+            var now = new Date();
+            $("#current-time").text(now.toLocaleTimeString());
+            $("#current-date").text(now.toDateString());
+            uptime = now - connectionEstablished;
+            $("#server-uptime").text(Math.floor(uptime/1000));
+        }
+
+
+    // chart.js
+
+        // var ctx = $('#myChart');
+        // var chart = new Chart(ctx, {
+        //     // The type of chart we want to create
+        //     type: 'line',
+
+        //     // The data for our dataset
+        //     data: {
+        //         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        //         datasets: [{
+        //             label: 'My First dataset',
+        //             backgroundColor: 'rgb(255, 99, 132)',
+        //             borderColor: 'rgb(255, 99, 132)',
+        //             data: [0, 10, 5, 2, 20, 30, 45]
+        //         }]
+        //     },
+        //     // Configuration options go here
+        //     options: {}
+        // });
+
+
+
+            
+    </script>
+</body>
+
+</html>
