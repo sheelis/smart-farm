@@ -1,6 +1,8 @@
 # Smart farm
 
-System that allows live monitoring, storing, analyizing and predicting of grid and off-grid elements data locally and or centrally over internet.
+IOT System that allows live monitoring, storing, analyizing and predicting of grid and off-grid elements data locally and or centrally over internet.
+
+The idea is to have a locally run dashboard independent of any internet services so that it can be used in very remote areas and would not require keeping up to date with 3rd party service changes. But if necessary, there will later be options to sync with internet constantly or at given times / intervals.
 
 Examples
 - rain water tank: 
@@ -16,7 +18,19 @@ Examples
   - regulate consumption (turn devices on or off)
 
 
-## Software
+> this is still work in progress and some functions are not implemented yet
+
+## Running it
+
+run ``` python3 /server/server.py```
+
+then open /client/4-mqtt/index.html in your browser to see the dashboard.
+
+Adding your IOT devices:
+
+![adding devices](Screenshot-devices.png)
+
+## Software functionality
 
 
 - _System_
@@ -29,12 +43,12 @@ Examples
             - talk to other scripts
             - manage users
         - reader / actor (hardware)
-            - get sensor readings
-            - send commands to hardware
+            - gets sensor readings
+            - sends commands to hardware
         - saver, retriever
-            - operate database
+            - operates database
             - talks to server, reader, analyzer
-            - backup database to cloud etc
+            - backup of database to cloud etc
         - analyzer (local)
             - future predictions
             - history analysis
@@ -59,7 +73,7 @@ Examples
         - predictions
         - future weather?
 
-## Hardware
+## Hardware needed
 
 - Brain:
   - firefly
