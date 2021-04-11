@@ -22,8 +22,7 @@ The server.py script is run on the server machine which can even be a headless r
 5. Add mqtt to Java:
    - [get paho](https://www.eclipse.org/paho/)
 6. Start mosquitto properly:            ```mosquitto -c /etc/mosquitto/mosquitto.conf -v```
-7. Run python pub and sub script:       ```python3 clent.py```
-8. Run html file, check console         ```smart-farm/client/index.html```
+7. Run html file, check console         ```smart-farm/client/index.html```
 
 
 
@@ -37,7 +36,6 @@ The server.py script is run on the server machine which can even be a headless r
 
 
 ## TODO NEXT:
-
 
 - control ESP over wifi LAN
 - control arduinos over USB
