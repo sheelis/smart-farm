@@ -36,6 +36,7 @@
 - weather page
 
 
+
 ## fetcher
 
 - get location
@@ -45,7 +46,6 @@
   - icon
   - chart
   - future
-
 
 
 
