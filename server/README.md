@@ -10,7 +10,7 @@ The server.py script is run on the server machine which can even be a headless r
    - ```sudo apt-get install mosquitto```
    - ```sudo apt-get install mosquitto-clients```
 2. Install Paho Mqtt:
-   - pip3 install paho-mqtt
+   - ```pip3 install paho-mqtt```
 3. Config Mosquitto:
    - ```sudo /etc/init.d/mosquitto stop```  __(stop it)__
    - ```sudo nano /etc/mosquitto/mosquitto.conf```
