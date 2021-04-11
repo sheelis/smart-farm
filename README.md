@@ -1,30 +1,30 @@
 # Smart farm
 
-IOT System that allows live monitoring, storing, analyizing and predicting of grid and off-grid elements data locally and or centrally over internet.
+IoT System that allows live monitoring, storing, analyizing and predicting of grid and off-grid element data locally or centrally over internet.
 
-The idea is to have a locally run dashboard independent of any internet services so that it can be used in very remote areas and would not require keeping up to date with 3rd party service changes. But if necessary, there will later be options to sync with internet constantly or at given times / intervals.
+The idea is to have a locally run dashboard independent of any internet services so that it can be used in very remote areas and would not require keeping up to date with 3rd party service changes. The option to synchronize with online services and databases is also possible and planned for, but not yet implemented.
 
-Examples
-- rain water tank: 
+Examples of analysis and predictions 
+- Rain water tanks: 
   - calculate rates of consumption
   - fetch past weather data to learn how much rainfall yielded how many liters of water
   - gather past and future data to predict draugths or storms
   - suggest appropriate actions to user (try to save water or use more water before storm)
-  - calculate if predictions were correct
-  - measure water temperature, to find best times to use devices that heat water
-- solar power: 
-  - calculate rates of consumption
-  - gather weather data, predict shortages, maintenance, useful improvements of solar system (more batteries, more panels, etc.) 
-  - regulate consumption (turn devices on or off)
+  - calculate if predictions were correct when time comes
+  - measure water temperature, to find best times to enable water heater
+- Solar or wind power: 
+  - calculate rates of consumption and accumulation
+  - gather weather data, predict shortages, maintenance, potentially useful improvements (more batteries, more panels, etc.) 
+  - regulate consumption (turn devices on or off based on rules and thresholds)
 
 
-> this is still work in progress and some functions are not implemented yet
 
 ## Running it
 
-run ``` python3 /server/server.py```
-
-then open /client/4-mqtt/index.html in your browser to see the dashboard.
+On the server run ``` python3 /server/server.py```
+On the client device open ```/client/index.html``` in your web browser to see the dashboard.
+Program your IoT device to send data or receive commands
+Then add your IoT devices and map the data points to variables
 
 Adding your IOT devices:
 
@@ -75,20 +75,17 @@ Adding your IOT devices:
 
 ## Hardware needed
 
-- Brain:
-  - firefly
+- Server:
   - raspberry
-  - flatscreen?
-  - sim card
-  - small router or AP mode? (comms with all distant sensors)
-- sensors:
+  - router
+- Sensors:
   - water level
   - battery charge level
   - battery voltage
   - light level
   - wind speed
   - temperature
-- actuators
+- Actuators
   - relays
   - motors
   - leds
