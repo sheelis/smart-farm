@@ -1,6 +1,6 @@
 # MQTT python server
 
-The server.py script is run on the server machine which can even be a headless raspberry pi. It uses asyncio and autobahn to asynchronously transport messages between devices and clients. It relies on mosquitto 
+The server.py script is run on the server machine which can even be a headless raspberry pi. It uses asyncio and autobahn to asynchronously transport messages between devices and clients. It relies on mosquitto and paho so they need to be installed and configured first.
 
 ## Installation
 
