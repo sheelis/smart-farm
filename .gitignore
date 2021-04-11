@@ -1,3 +1,2 @@
 .vscode
-./client/old/
-./server/old/
+**/hidden/
