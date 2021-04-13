@@ -1,4 +1,4 @@
-""" This module handles all commnication with an arduino 
+""" This module handles all communication with an arduino 
 USAGE:
 from lib import arduino_serial          # import this library
 allarduinos = arduino_serial.find("")   # find all connected arduinos

@@ -1,6 +1,6 @@
 # Smart farm
 
-IoT System that allows live monitoring, storing, analyizing of current weather (e.g. wind speed) and deployed system status (e.g. battery charge) and predictions to achieve custom set goals by the user (e.g. use electric power more efficiently).
+IoT System that allows live monitoring, storing, analyzing of current weather (e.g. wind speed) and deployed system status (e.g. battery charge) and predictions to achieve custom set goals by the user (e.g. use electric power more efficiently).
 
 The main idea is to have a locally run IoT dashboard to easily add and control your IoT devices.
 
@@ -21,22 +21,22 @@ Adding your IOT devices:
 
 
 
-## Relevant data nalysis and predictions 
+## Relevant data analysis and predictions 
 
 Useful applications for a small modernized household / hobby lot.
 
 - Rain water tanks
   - calculate rates of consumption
   - fetch past weather data to learn how much rainfall yielded how many liters of water
-  - gather past and future data to predict draugths or storms
+  - gather past and future data to predict draughts or storms
   - suggest appropriate actions to user (try to save water or use more water before storm)
   - calculate if predictions were correct when time comes
   - measure water temperature, to find best times to enable water heater
 - Solar or wind power
   - calculate rates of consumption and accumulation
-  - gather weather data, predict shortages, maintenance, potentially useful improvements (more batteries, more panels, etc.) 
+  - gather weather data, predict shortages, maintenance, potentially useful improvements (more batteries, more panels, etc.)
   - regulate consumption (turn devices on or off based on rules and thresholds)
-- Greenhouse 
+- Greenhouse
   - temperature, light and air humidity levels
   - automated watering, misting, ventilation, etc
 

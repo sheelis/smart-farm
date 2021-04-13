@@ -8,7 +8,6 @@ import json
 from lib import arduino_serial
 
 
-
 # Important variables
 broker_address="127.0.0.1" # My mqtt broker address on LAN
 
@@ -47,7 +46,7 @@ def handleRX(self, RX):
             self.opener = True
             self.username = jsonload["username"]
             self.usrID = self.usrID+"-"+self.username
-            print(codeID+self.usrID + "\t ---> \t " + "OK. User authrized")
+            print(codeID+self.usrID + "\t ---> \t " + "OK. User authorized")
         except:
             pass 
 
@@ -92,7 +91,7 @@ def handleTX():
     
 
 
-# aquire topics from storage:
+# acquire topics from storage:
 topics = ["rgbled","house-humid", "house-temp"]
 
 
@@ -113,7 +112,6 @@ try:
     client.subscribe(topics[0])
 
 
-
     print(" --------------------------------------- ")
 
     # get readings from USB devices
@@ -121,17 +119,11 @@ try:
     client.publish(topics[1],'94')
 
     time.sleep(8)
-
-        
-    
-
-
-
     client.loop_forever()    #stop the loop
 except:
     print("   - FAILED")
+
 print(" --------------------------------------- ")
 
 client.disconnect()
 print(" - Exiting.")    
-
